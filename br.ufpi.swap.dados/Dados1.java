@@ -1,3 +1,3 @@
-public class Dado1 {
+public class Dados1 {
 	
 }
