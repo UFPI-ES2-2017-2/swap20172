@@ -48,3 +48,15 @@ Durante o processo de configuração:
 * Prefira a configuração padrão.
 
 Pronto. Agora basta criar seu projeto.
+
+## Criando o Projeto
+
+Crie um projeto com:
+
+* Application name: Swap
+* Company domain: br.ufpi
+* Blank Activity
+
+## Consumindo dados de API
+
+

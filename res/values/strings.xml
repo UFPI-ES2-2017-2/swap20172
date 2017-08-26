@@ -12,11 +12,14 @@
     <!--Tela Esqueceu a Senha-->
     <string name="texto_esqueceu_senha">Insira o email que você utilizou no cadastro. Nós mandaremos um email com um linl para você redefinir sua senha.</string>
     <string name="botao_enviar">Enviar</string>
-    
+
     <!--Tela Cadastro-->
     <string name="texto_cadastro">Cadastro</string>
     <string name="campo_nome">Digite seu nome</string>
     <string name="campo_repetir_senha">Digite sua senha novamente</string>
     <string name="botao_criar_conta">Criar conta</string>
+
+    <!--Mensagens de ERRO-->
+    <string name="erro_campo_vazio">Por favor, preencha todos os campos!</string>
 
 </resources>

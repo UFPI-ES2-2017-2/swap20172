@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ufpi.br.swap.visao.LoginActivity">
+    tools:context="ufpi.br.swap.controle.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,10 +21,10 @@
         android:layout_marginTop="32dp"
         app:layout_constraintVertical_bias="0.0"
         app:layout_constraintHorizontal_bias="0.501"
-        android:id="@+id/textView" />
+        android:id="@+id/textView_swap" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editText_email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -35,13 +35,13 @@
         android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView_swap"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp" />
+        android:layout_marginStart="@dimen/input_left"
+        android:layout_marginEnd="@dimen/input_rigth" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editText_senha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -52,37 +52,37 @@
         android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/editText_email"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp" />
+        android:layout_marginStart="@dimen/input_left"
+        android:layout_marginEnd="@dimen/input_rigth" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_entrar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/input_rigth"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
+        android:layout_marginStart="@dimen/input_left"
         android:layout_marginTop="8dp"
         android:text="@string/botao_entrar"
         android:textAllCaps="false"
         android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
-        app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_esqueceu_senha"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="@dimen/input_rigth"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="@dimen/input_left"
         android:layout_marginTop="8dp"
         android:onClick="goToEsqueceuSenha"
         android:padding="0dp"
@@ -91,37 +91,37 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/button_entrar" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_facebook"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="@dimen/input_rigth"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
+        android:layout_marginStart="@dimen/input_left"
         android:background="@color/colorFacebook"
         android:text="@string/botao_entrar_facebook"
         android:textAllCaps="false"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_cadastrar"
         app:layout_constraintHorizontal_bias="0.0"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/button_cadastrar"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="64dp"
+        android:layout_marginEnd="@dimen/input_rigth"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="@dimen/input_left"
         android:onClick="goToCadastro"
         android:text="@string/botao_cadastrar"
         android:textAllCaps="false"

@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- Campos de Formulário central -->
+    <dimen name="input_left">32dp</dimen>
+    <dimen name="input_rigth">32dp</dimen>
+</resources>

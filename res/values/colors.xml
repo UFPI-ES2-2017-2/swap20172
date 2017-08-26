@@ -4,7 +4,7 @@
     <color name="colorPrimary">#49aec8</color>
     <color name="colorSwap">#49aec8</color>
     <color name="colorPrimaryDark">#ccc</color>
-    <color name="colorAccent">#ccc</color>
+    <color name="colorAccent">#cccccc</color>
 
     <color name="colorFacebook">#3b5998</color>
 </resources>
