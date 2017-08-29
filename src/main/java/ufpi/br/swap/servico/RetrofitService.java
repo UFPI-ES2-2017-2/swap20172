@@ -12,6 +12,14 @@ public interface RetrofitService {
     @POST("login")
     Call<Usuario> login(
             @Field("email") String email,
-            @Field("senha") String senha
+            @Field("password") String password
+    );
+
+    @FormUrlEncoded
+    @POST("signup")
+    Call<RespostaServidor> cadastrarUsuario(
+            @Field("name") String name,
+            @Field("email") String email,
+            @Field("password") String password
     );
 }

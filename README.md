@@ -1,5 +1,6 @@
 # swap20172
-Trabalho da disciplina de Engenharia de Software 2, UFPI - 2017.2
+Trabalho da disciplina de Engenharia de Software 2, UFPI - 2017.2.
+O aplicativo está consumindo dados de uma API feita em Node.js: [link do repositório](https://bitbucket.org/kassiov/swap/src).
 
 ## Pré-Requisitos
 

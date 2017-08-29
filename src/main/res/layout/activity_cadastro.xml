@@ -24,7 +24,7 @@
         android:layout_marginEnd="@dimen/input_rigth" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editText_nome_cadastro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -40,7 +40,7 @@
         android:layout_marginEnd="@dimen/input_rigth" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editText_email_cadastro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -51,12 +51,12 @@
         android:inputType="textEmailAddress"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
+        app:layout_constraintTop_toBottomOf="@+id/editText_nome_cadastro"
         android:layout_marginStart="@dimen/input_left"
         android:layout_marginEnd="@dimen/input_rigth" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editText_senha_cadastro"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -67,12 +67,12 @@
         android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/editText_email_cadastro"
         android:layout_marginStart="@dimen/input_left"
         android:layout_marginEnd="@dimen/input_rigth" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/editText_senha_cadastro_repetida"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
@@ -83,22 +83,22 @@
         android:inputType="textPassword"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6"
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha_cadastro"
         android:layout_marginStart="@dimen/input_left"
         android:layout_marginEnd="@dimen/input_rigth" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/button_criar_conta"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/input_rigth"
         android:layout_marginLeft="64dp"
         android:layout_marginRight="64dp"
+        android:layout_marginStart="@dimen/input_left"
         android:layout_marginTop="24dp"
         android:text="@string/botao_criar_conta"
         android:textAllCaps="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText7"
-        android:layout_marginStart="@dimen/input_left"
-        android:layout_marginEnd="@dimen/input_rigth" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_senha_cadastro_repetida" />
 </android.support.constraint.ConstraintLayout>

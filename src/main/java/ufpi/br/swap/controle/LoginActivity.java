@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         listenerButtons();
     }
 
-    public void listenerButtons() {
+    private void listenerButtons() {
         buttonEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,19 +58,33 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToCadastro(v);
+            }
+        });
+
+        buttonEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEsqueceuSenha(v);
+            }
+        });
     }
 
-    public void goToEsqueceuSenha(View v) {
+    private void goToEsqueceuSenha(View v) {
         Intent intent = new Intent(this, EsqueceuSenhaActivity.class);
         startActivity(intent);
     }
 
-    public void goToCadastro(View v) {
+    private void goToCadastro(View v) {
         Intent intent = new Intent(this, CadastroActivity.class);
         startActivity(intent);
     }
 
-    public void efetuarLogin(String email, String senha) {
+    private void efetuarLogin(String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<Usuario> call = service.login(email, senha);
         call.enqueue(new Callback<Usuario>() {
@@ -78,15 +92,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
                     Usuario usuario = response.body();
-                    if (usuario.isLogado()) {
-                        Toast.makeText(getApplicationContext(), "Nome: " + usuario.getNome() + ". Email: " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+                    if (usuario.isLoged()) {
+                        Toast.makeText(getApplicationContext(), "Nome: " + usuario.getName() + ". Email: " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Usuário inexistente", Toast.LENGTH_LONG).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Erro ao conectar com servidor", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
     }

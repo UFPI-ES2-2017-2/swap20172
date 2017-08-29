@@ -21,5 +21,7 @@
 
     <!--Mensagens de ERRO-->
     <string name="erro_campo_vazio">Por favor, preencha todos os campos!</string>
+    <string name="erro_conectar_servidor">Erro ao conectar com servidor.</string>
+    <string name="erro_senhas_diferentes">As senhas digitadas devem ser iguais!</string>
 
 </resources>

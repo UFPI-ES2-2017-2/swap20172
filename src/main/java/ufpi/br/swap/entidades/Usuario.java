@@ -2,33 +2,33 @@ package ufpi.br.swap.entidades;
 
 public class Usuario {
 
-    private String nome;
+    private String name;
     private String email;
-    private String senha;
-    private Boolean logado;
+    private String password;
+    private Boolean loged;
 
-    public Boolean isLogado() {
-        return logado;
+    public Boolean isLoged() {
+        return loged;
     }
 
-    public void setLogado(Boolean logado) {
-        this.logado = logado;
+    public void setLogged(Boolean loged) {
+        this.loged = loged;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
