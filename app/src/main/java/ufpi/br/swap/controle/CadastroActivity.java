@@ -86,7 +86,7 @@ public class CadastroActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<RespostaServidor> call, Throwable t) {
-
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
     }
