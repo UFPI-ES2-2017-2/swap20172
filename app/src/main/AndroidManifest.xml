@@ -20,6 +20,10 @@
         </activity>
         <activity android:name=".controle.EsqueceuSenhaActivity" />
         <activity android:name=".controle.CadastroActivity" />
+        <activity
+            android:name=".controle.InicialActivity"
+            android:label="@string/title_activity_inicial"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

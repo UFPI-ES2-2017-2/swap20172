@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <color name="colorPrimaryDark">#3f51b5</color>
     <color name="colorPrimary">#49aec8</color>
     <color name="colorSwap">#49aec8</color>
-    <color name="colorPrimaryDark">#ccc</color>
+    <!--<color name="colorPrimaryDark">#ccc</color>-->
     <color name="colorAccent">#cccccc</color>
 
     <color name="colorFacebook">#3b5998</color>

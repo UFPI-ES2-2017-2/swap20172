@@ -94,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     Usuario usuario = response.body();
                     if (usuario.isLoged()) {
                         Toast.makeText(getApplicationContext(), "Nome: " + usuario.getName() + ". Email: " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+                        irParaTelaInicial(usuario);
                     } else {
                         Toast.makeText(getApplicationContext(), "Usuário inexistente", Toast.LENGTH_LONG).show();
                     }
@@ -105,5 +106,13 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void irParaTelaInicial(Usuario usuario) {
+        Intent intent = new Intent(this, InicialActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra("user_name", usuario.getName());
+        intent.putExtra("user_email", usuario.getEmail());
+        startActivity(intent);
     }
 }
