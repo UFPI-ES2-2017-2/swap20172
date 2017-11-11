@@ -23,6 +23,7 @@ public class InicialActivity extends AppCompatActivity
     private TextView userEmailText;
     private TextView userNameText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,7 @@ public class InicialActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_perfil) {
 
         } else if (id == R.id.nav_saldo) {

@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Usuario usuario = response.body();
                     if (usuario.isLoged()) {
-                        Toast.makeText(getApplicationContext(), "Nome: " + usuario.getName() + ". Email: " + usuario.getEmail(), Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "Nome: " + usuario.getName() + ". Email: " + usuario.getEmail(), Toast.LENGTH_LONG).show();
                         irParaTelaInicial(usuario);
                     } else {
                         Toast.makeText(getApplicationContext(), "Usuário inexistente", Toast.LENGTH_LONG).show();
