@@ -1,34 +1,22 @@
 package ufpi.br.swap.entidades;
 
+/**
+ * Uma representação de um usuário do sistema.
+ * @author edson
+ */
 public class Usuario {
 
-    private String name;
+    private String nome;
     private String email;
-    private String password;
-    private Boolean loged;
+    private String senha;
+    private Boolean logado;
 
-    public Boolean isLoged() {
-        return loged;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogged(Boolean loged) {
-        this.loged = loged;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -37,5 +25,21 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public Boolean getLogado() {
+        return logado;
+    }
+
+    public void setLogado(Boolean logado) {
+        this.logado = logado;
     }
 }
