@@ -13,8 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ufpi.br.swap.R;
-import ufpi.br.swap.entidades.Usuario;
-import ufpi.br.swap.servico.RespostaServidor;
+import ufpi.br.swap.servico.MensagemAPI;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
 
@@ -66,14 +65,14 @@ public class CadastroActivity extends AppCompatActivity {
 
     private void cadastrarUsuario(String nome, String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<RespostaServidor> call = service.cadastrarUsuario(nome, email, senha);
-        call.enqueue(new Callback<RespostaServidor>() {
+        Call<MensagemAPI> call = service.cadastrarUsuario(nome, email, senha);
+        call.enqueue(new Callback<MensagemAPI>() {
             @Override
-            public void onResponse(Call<RespostaServidor> call, Response<RespostaServidor> response) {
+            public void onResponse(Call<MensagemAPI> call, Response<MensagemAPI> response) {
                 if (response.isSuccessful()) {
-                    RespostaServidor respostaServidor = response.body();
-                    String msg = respostaServidor.getMsg();
-                    Boolean success = respostaServidor.getSuccess();
+                    MensagemAPI mensagemAPI = response.body();
+                    String msg = mensagemAPI.getMsg();
+                    Boolean success = mensagemAPI.getSuccess();
 
                     if (success) {
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
@@ -85,7 +84,7 @@ public class CadastroActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<RespostaServidor> call, Throwable t) {
+            public void onFailure(Call<MensagemAPI> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });

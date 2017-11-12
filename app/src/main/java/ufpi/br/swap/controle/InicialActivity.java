@@ -1,5 +1,7 @@
 package ufpi.br.swap.controle;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,16 +15,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import ufpi.br.swap.entidades.Conhecimento;
 import ufpi.br.swap.R;
+import ufpi.br.swap.servico.MensagemAPI;
+import ufpi.br.swap.servico.RetrofitService;
+import ufpi.br.swap.servico.ServiceGenerator;
 
 public class InicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    List<Conhecimento> listaConhecimentosRecomendados = new ArrayList<>();
+    ArrayAdapter<Conhecimento> adapter;
+
     private TextView userEmailText;
     private TextView userNameText;
-
+    private ListView listaRecomendados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +59,7 @@ public class InicialActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+
             }
         });
 
@@ -52,6 +73,9 @@ public class InicialActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View nav = navigationView.getHeaderView(0);
         setarTextViews(nav);
+
+        listaRecomendados = (ListView) findViewById(R.id.lista_recomendados);
+        buscarConhecimentosRecomendados();
     }
 
     private void setarTextViews(View nav) {
@@ -99,5 +123,27 @@ public class InicialActivity extends AppCompatActivity
         return true;
     }
 
+    private void buscarConhecimentosRecomendados() {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<List<Conhecimento>> call = service.getConhecimentosRecomendados();
+        call.enqueue(new Callback<List<Conhecimento>>() {
+            @Override
+            public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
+                if (response.isSuccessful()) {
+                    listaConhecimentosRecomendados = response.body();
+                    setarLista();
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<Conhecimento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setarLista() {
+        adapter = new ArrayAdapter<Conhecimento>(this, android.R.layout.simple_list_item_1, listaConhecimentosRecomendados);
+        listaRecomendados.setAdapter(adapter);
+    }
 }

@@ -1,6 +1,6 @@
 package ufpi.br.swap.servico;
 
-public class RespostaServidor {
+public class MensagemAPI {
 
     private String msg;
     private Boolean success;
