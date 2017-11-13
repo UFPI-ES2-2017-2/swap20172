@@ -46,5 +46,6 @@ public class DataSource extends SQLiteOpenHelper {
 
     public Cursor recuperarUsuario (String tabela){
         Cursor retorno = db.rawQuery("SELECT * FROM " + tabela, null);
+        return retorno;
     }
 }

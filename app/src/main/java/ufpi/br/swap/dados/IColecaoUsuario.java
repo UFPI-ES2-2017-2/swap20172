@@ -13,12 +13,12 @@ public interface IColecaoUsuario {
      * Busca um usuário na Colecao.
      * @return o usuário procurado.
      */
-    public Usuario buscarUsuario();
+    public boolean buscarUsuario(Usuario objeto);
 
     /**
      * Cria um usuário e insere-o na Colecao.
      */
-    public void criarUsuario();
+    public boolean criarUsuario(Usuario objeto);
 
     /**
      * Checa se um usuário já existe na Colecao.
