@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.widget.SearchView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,6 +48,7 @@ public class InicialActivity extends AppCompatActivity
     private TextView userEmailText;
     private TextView userNameText;
     private ListView listaRecomendados;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +58,6 @@ public class InicialActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Página Inicial");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pesquisarConhecimentos();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -77,6 +72,10 @@ public class InicialActivity extends AppCompatActivity
 
         listaRecomendados = (ListView) findViewById(R.id.lista_recomendados);
         buscarConhecimentosRecomendados();
+
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("Pesquisar Conhecimentos");
+        eventoPesquisa();
     }
 
     private void setarTextViews(View nav) {
@@ -160,9 +159,25 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
-    private void pesquisarConhecimentos() {
+    private void eventoPesquisa() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                pesquisarConhecimentos(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                pesquisarConhecimentos(newText);
+                return false;
+            }
+        });
+    }
+
+    private void pesquisarConhecimentos(String query) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
-        Call<List<Conhecimento>> call = service.pesquisarConhecimentos("html");
+        Call<List<Conhecimento>> call = service.pesquisarConhecimentos(query);
         call.enqueue(new Callback<List<Conhecimento>>() {
             @Override
             public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
