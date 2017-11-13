@@ -13,7 +13,7 @@ public interface IColecaoUsuario {
      * Busca um usuário na Colecao.
      * @return o usuário procurado.
      */
-    public Usuario buscar();
+    public Usuario buscarUsuario();
 
     /**
      * Cria um usuário e insere-o na Colecao.
