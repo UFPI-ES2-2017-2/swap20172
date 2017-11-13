@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -145,5 +146,17 @@ public class InicialActivity extends AppCompatActivity
     private void setarLista() {
         adapter = new ArrayAdapter<Conhecimento>(this, android.R.layout.simple_list_item_1, listaConhecimentosRecomendados);
         listaRecomendados.setAdapter(adapter);
+        listaRecomendados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                Conhecimento c = listaConhecimentosRecomendados.get(position);
+                Intent intent = new Intent(getApplicationContext(), AulaActivity.class);
+                intent.putExtra("nome", c.getName());
+                intent.putExtra("descricao", c.getDescription());
+                intent.putExtra("nome_usuario", c.getUser());
+                intent.putExtra("rating", c.getRating());
+                startActivity(intent);
+            }
+        });
     }
 }

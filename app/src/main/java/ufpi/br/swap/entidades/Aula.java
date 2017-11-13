@@ -1,53 +1,49 @@
 package ufpi.br.swap.entidades;
 
+import java.util.ArrayList;
+
 /**
- * Created by negadoaiti on 12/11/17.
+ * Representação de uma Aula
+ * Created by viniciuspablo on 12/11/17.
  */
 
 public class Aula {
-    private String aluno;
-    private String Professor;
-    private String data;
-    private String local;
-    private String nota;
 
-    public String getAluno() {
+    private String nome;
+    private String descricao;
+    private ArrayList<String> comentarios;
+    private Usuario professor;
+    private Usuario aluno;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Usuario getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Usuario professor) {
+        this.professor = professor;
+    }
+
+    public Usuario getAluno() {
         return aluno;
     }
 
-    public void setAluno(String aluno) {
+    public void setAluno(Usuario aluno) {
         this.aluno = aluno;
-    }
-
-    public String getProfessor() {
-        return Professor;
-    }
-
-    public void setProfessor(String professor) {
-        Professor = professor;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public String getLocal() {
-        return local;
-    }
-
-    public void setLocal(String local) {
-        this.local = local;
-    }
-
-    public String getNota() {
-        return nota;
-    }
-
-    public void setNota(String nota) {
-        this.nota = nota;
     }
 }

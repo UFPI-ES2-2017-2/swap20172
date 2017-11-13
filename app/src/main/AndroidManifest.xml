@@ -23,6 +23,10 @@
         <activity
             android:name=".controle.InicialActivity"
             android:label="@string/title_activity_inicial"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".controle.AulaActivity"
+            android:label="@string/title_activity_aula"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
