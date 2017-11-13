@@ -60,7 +60,7 @@ public class InicialActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                pesquisarConhecimentos();
             }
         });
 
@@ -156,6 +156,25 @@ public class InicialActivity extends AppCompatActivity
                 intent.putExtra("nome_usuario", c.getUser());
                 intent.putExtra("rating", c.getRating());
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void pesquisarConhecimentos() {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<List<Conhecimento>> call = service.pesquisarConhecimentos("html");
+        call.enqueue(new Callback<List<Conhecimento>>() {
+            @Override
+            public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
+                if (response.isSuccessful()) {
+                    listaConhecimentosRecomendados = response.body();
+                    setarLista();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Conhecimento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
     }

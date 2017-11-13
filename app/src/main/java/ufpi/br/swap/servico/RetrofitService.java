@@ -29,4 +29,10 @@ public interface RetrofitService {
 
     @GET("knowledge/recommended")
     Call<List<Conhecimento>> getConhecimentosRecomendados();
+
+    @FormUrlEncoded
+    @POST("knowledge/search")
+    Call<List<Conhecimento>> pesquisarConhecimentos(
+            @Field("name") String name
+    );
 }
