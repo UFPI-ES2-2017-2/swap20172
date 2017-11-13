@@ -49,6 +49,7 @@ public class InicialActivity extends AppCompatActivity
     private TextView userNameText;
     private ListView listaRecomendados;
     private SearchView searchView;
+    private TextView labelConhecimentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +73,8 @@ public class InicialActivity extends AppCompatActivity
 
         listaRecomendados = (ListView) findViewById(R.id.lista_recomendados);
         buscarConhecimentosRecomendados();
+
+        labelConhecimentos = (TextView) findViewById(R.id.textView_recomendados);
 
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setQueryHint("Pesquisar Conhecimentos");
@@ -163,13 +166,23 @@ public class InicialActivity extends AppCompatActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                labelConhecimentos.setText("Resultados");
                 pesquisarConhecimentos(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                labelConhecimentos.setText("Resultados");
                 pesquisarConhecimentos(newText);
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener(){
+            @Override
+            public boolean onClose(){
+                labelConhecimentos.setText("Recomendados");
                 return false;
             }
         });
