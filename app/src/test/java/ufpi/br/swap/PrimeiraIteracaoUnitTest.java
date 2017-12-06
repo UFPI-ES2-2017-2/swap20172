@@ -38,10 +38,9 @@ public class PrimeiraIteracaoUnitTest {
     }
 
     /**
-     * C.U. testado: efetuar login (controle de sessão)
+     * C.U. testado: efetuar login (controle de sessão) corretamente
      * @throws Exception
      */
-
     @Test
     public void loginTesteSucesso() throws Exception{
         RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
@@ -58,6 +57,10 @@ public class PrimeiraIteracaoUnitTest {
 
     }
 
+    /**
+     * C.U. testado: efetuar login (controle de sessão) com senha errada
+     * @throws Exception
+     */
     @Test
     public void loginTesteSenhaErrada() throws Exception{
         RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
@@ -72,6 +75,10 @@ public class PrimeiraIteracaoUnitTest {
 
     }
 
+    /**
+     * C.U. testado: efetuar login (controle de sessão) com email inexistente
+     * @throws Exception
+     */
     @Test
     public void loginTesteUsuarioInexistente() throws Exception{
         RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
