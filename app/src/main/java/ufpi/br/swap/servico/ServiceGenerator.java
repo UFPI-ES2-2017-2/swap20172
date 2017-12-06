@@ -14,7 +14,7 @@ public class ServiceGenerator {
     //URL base do endpoint. Deve sempre terminar com /
     //private static final String API_BASE_URL = "http://10.0.0.107:8000/swap/api/";
     //Na UFPI
-    private static final String API_BASE_URL = "http://10.13.69.0:8000/swap/api/";
+    private static final String API_BASE_URL = "http://192.168.0.110:8000/swap/api/";
 
     public static <S> S createService(Class<S> serviceClass) {
 
