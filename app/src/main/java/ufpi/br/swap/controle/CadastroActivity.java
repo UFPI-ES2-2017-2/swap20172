@@ -17,6 +17,9 @@ import ufpi.br.swap.servico.MensagemAPI;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
 
+/**
+ * Classe responsável pelo gerenciamento da tela de cadastro de usuário
+ */
 public class CadastroActivity extends AppCompatActivity {
 
     private Button buttonCadastrar;
@@ -26,6 +29,11 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText editTextSenhaRepetida;
     private boolean status = true;
 
+    /**
+     * Método responsável pelo gerenciamento dos componentes da tela de cadastro de usuário e do
+     * tratamento dos eventos ocorridos, por exemplo, um click em um botão.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +58,16 @@ public class CadastroActivity extends AppCompatActivity {
         this.status = value;
     }
 
+    /**
+     * Método responsável pelo gerenciamento e tratamento do evento de click de um botão.
+     */
     private void listenerButtons() {
         buttonCadastrar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método responsável pelo tratamento do evento de click do botão Cadastrar, chamando
+             * o método "cadastrarUsuario()".
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 String nome = editTextNome.getText().toString();
@@ -72,10 +88,25 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método responsável pelo cadastro de um novo usuário após ser chamado pelo método onClick() do botão Cadastrar.
+     * @param nome
+     * @param email
+     * @param senha
+     * @return this.status
+     */
     public boolean cadastrarUsuario(String nome, String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<MensagemAPI> call = service.cadastrarUsuario(nome, email, senha);
         call.enqueue(new Callback<MensagemAPI>() {
+            /**
+             * Método responsável por tentar realizar o cadastro de um novo usuário. Caso o cadastro
+             * seja realizado com sucesso, uma mensagem é exibida na tela e logo após, um
+             * redirecionamento para a tela de login é feito. Caso contrário, uma mensagem de erro é
+             * exibida.
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call<MensagemAPI> call, Response<MensagemAPI> response) {
                 if (response.isSuccessful()) {
@@ -94,6 +125,12 @@ public class CadastroActivity extends AppCompatActivity {
                 }
             }
 
+            /**
+             * Método responsável por mostrar uma mensagem de erro na tela no caso de falha ao
+             * tentar realizar o cadastro.
+             * @param call
+             * @param t
+             */
             @Override
             public void onFailure(Call<MensagemAPI> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
@@ -104,6 +141,10 @@ public class CadastroActivity extends AppCompatActivity {
         return this.status;
     }
 
+    /**
+     * Método responsável por redirecionar para tela de login após o cadastro ter sido realizado
+     * com sucesso.
+     */
     private void voltarParaTelaLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
