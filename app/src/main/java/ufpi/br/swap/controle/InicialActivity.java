@@ -1,13 +1,11 @@
 package ufpi.br.swap.controle;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SearchView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,18 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ufpi.br.swap.entidades.Conhecimento;
 import ufpi.br.swap.R;
-import ufpi.br.swap.servico.MensagemAPI;
+import ufpi.br.swap.entidades.Usuario;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
 
@@ -43,13 +36,18 @@ public class InicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     List<Conhecimento> listaConhecimentosRecomendados = new ArrayList<>();
-    ArrayAdapter<Conhecimento> adapter;
+    List<Usuario> listaPesquisaUsuarios = new ArrayList<>();
+    ArrayAdapter<Conhecimento> adapterConhecimentos;
+    ArrayAdapter<Usuario> adapterUsuarios;
 
     private TextView userEmailText;
     private TextView userNameText;
     private ListView listaRecomendados;
     private SearchView searchView;
     private TextView labelConhecimentos;
+    private RadioGroup radioGroup;
+    private RadioButton radioButtonConhecimentos;
+    private RadioButton radioButtonUsuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +57,11 @@ public class InicialActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Página Inicial");
+
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.check(R.id.radioButton_conhecimentos);
+        radioButtonConhecimentos = (RadioButton) findViewById(R.id.radioButton_conhecimentos);
+        radioButtonUsuarios = (RadioButton) findViewById(R.id.radioButton_usuarios);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -77,7 +80,7 @@ public class InicialActivity extends AppCompatActivity
         labelConhecimentos = (TextView) findViewById(R.id.textView_recomendados);
 
         searchView = (SearchView) findViewById(R.id.searchView);
-        searchView.setQueryHint("Pesquisar Conhecimentos");
+        searchView.setQueryHint("Pesquisar");
         eventoPesquisa();
     }
 
@@ -96,7 +99,6 @@ public class InicialActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -145,43 +147,35 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
-    private void setarLista() {
-        adapter = new ArrayAdapter<Conhecimento>(this, android.R.layout.simple_list_item_1, listaConhecimentosRecomendados);
-        listaRecomendados.setAdapter(adapter);
-        listaRecomendados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-                Conhecimento c = listaConhecimentosRecomendados.get(position);
-                Intent intent = new Intent(getApplicationContext(), AulaActivity.class);
-                intent.putExtra("nome", c.getName());
-                intent.putExtra("descricao", c.getDescription());
-                intent.putExtra("nome_usuario", c.getUser());
-                intent.putExtra("rating", c.getRating());
-                startActivity(intent);
-            }
-        });
-    }
-
     private void eventoPesquisa() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 labelConhecimentos.setText("Resultados");
-                pesquisarConhecimentos(query);
+                if(radioButtonConhecimentos.isChecked()) {
+                    pesquisarConhecimentos(query);
+                } else if(radioButtonUsuarios.isChecked()) {
+                    pesquisarUsuarios(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 labelConhecimentos.setText("Resultados");
-                pesquisarConhecimentos(newText);
+                if(radioButtonConhecimentos.isChecked()) {
+                    pesquisarConhecimentos(newText);
+                } else if(radioButtonUsuarios.isChecked()) {
+                    pesquisarUsuarios(newText);
+                }
                 return false;
             }
         });
 
-        searchView.setOnCloseListener(new SearchView.OnCloseListener(){
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
-            public boolean onClose(){
+            public boolean onClose() {
+                buscarConhecimentosRecomendados();
                 labelConhecimentos.setText("Recomendados");
                 return false;
             }
@@ -206,4 +200,50 @@ public class InicialActivity extends AppCompatActivity
             }
         });
     }
+
+    private void pesquisarUsuarios(String query) {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<List<Usuario>> call = service.pesquisarUsuarios(query);
+        call.enqueue(new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                if (response.isSuccessful()) {
+                    listaPesquisaUsuarios = response.body();
+                    setarLista();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void setarLista() {
+        if(radioButtonConhecimentos.isChecked()) {
+            adapterConhecimentos = new ArrayAdapter<Conhecimento>(this, android.R.layout.simple_list_item_1, listaConhecimentosRecomendados);
+            listaRecomendados.setAdapter(adapterConhecimentos);
+        } else if(radioButtonUsuarios.isChecked()) {
+            adapterUsuarios = new ArrayAdapter<Usuario>(this, android.R.layout.simple_list_item_1, listaPesquisaUsuarios);
+            listaRecomendados.setAdapter(adapterUsuarios);
+        } else {
+
+        }
+
+        listaRecomendados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+                Conhecimento c = listaConhecimentosRecomendados.get(position);
+                Intent intent = new Intent(getApplicationContext(), AulaActivity.class);
+                intent.putExtra("nome", c.getName());
+                intent.putExtra("descricao", c.getDescription());
+                intent.putExtra("nome_usuario", c.getUser());
+                intent.putExtra("rating", c.getRating());
+                startActivity(intent);
+            }
+        });
+    }
 }
+
+
