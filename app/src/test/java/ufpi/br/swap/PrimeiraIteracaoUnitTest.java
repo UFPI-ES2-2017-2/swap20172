@@ -1,9 +1,16 @@
 package ufpi.br.swap;
 
+import android.util.Log;
+
 import org.junit.Test;
 
+import retrofit2.Call;
+import retrofit2.Response;
 import ufpi.br.swap.controle.CadastroActivity;
 import ufpi.br.swap.controle.LoginActivity;
+import ufpi.br.swap.servico.MensagemAPI;
+import ufpi.br.swap.servico.RetrofitService;
+import ufpi.br.swap.servico.ServiceGenerator;
 
 import static org.junit.Assert.*;
 
@@ -20,20 +27,22 @@ public class PrimeiraIteracaoUnitTest {
      */
     @Test
     public void cadastrarTeste() throws Exception{
-        CadastroActivity ca = new CadastroActivity();
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<MensagemAPI> call = service.cadastrarUsuario("João", "email@mail.com", "senha");
 
-        boolean status;
-        status = ca.cadastrarUsuario("João","email@mail.com","senha");
+        Response<MensagemAPI> response = call.execute();
 
-        assertEquals(true,status);
+
+        assertTrue(response.isSuccessful());
     }
 
     /**
      * C.U. testado: efetuar login (controle de sessão)
      * @throws Exception
      */
-    @Test
+
     public void loginTeste() throws Exception{
+        CadastroActivity ca = new CadastroActivity();
         LoginActivity la = new LoginActivity();
         boolean status;
 
