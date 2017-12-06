@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 import ufpi.br.swap.controle.CadastroActivity;
 import ufpi.br.swap.controle.LoginActivity;
+import ufpi.br.swap.entidades.Usuario;
 import ufpi.br.swap.servico.MensagemAPI;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
@@ -41,13 +42,32 @@ public class PrimeiraIteracaoUnitTest {
      * @throws Exception
      */
 
+    @Test
     public void loginTeste() throws Exception{
-        CadastroActivity ca = new CadastroActivity();
-        LoginActivity la = new LoginActivity();
-        boolean status;
+        RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
+        Call<MensagemAPI> call1 = service1.cadastrarUsuario("Pablo", "mail@mail.com", "senha");
+        Response<MensagemAPI> response = call1.execute();
 
-        status = la.efetuarLogin("mail@mail.com", "senha");
 
-        assertEquals(true,status);
+        //Teste com usuário e senha corretos
+        RetrofitService service2 = ServiceGenerator.createService(RetrofitService.class);
+        Call<Usuario> call2 = service2.login("mail@mail.com", "senha");
+        Response<Usuario> response2 = call2.execute();
+        assertTrue(response2.body().getLogado());
+
+        //Teste com senha incorreta
+        RetrofitService service3 = ServiceGenerator.createService(RetrofitService.class);
+        Call<Usuario> call3 = service3.login("mail@mail.com", "pass");
+        Response<Usuario> response3 = call3.execute();
+        assertFalse(response3.body().getLogado());
+
+
+        //Teste com email incorreto
+        RetrofitService service4 = ServiceGenerator.createService(RetrofitService.class);
+        Call<Usuario> call4 = service4.login("new_email@mail.com", "senha");
+        Response<Usuario> response4 = call4.execute();
+        assertFalse(response4.body().getLogado());
+
+
     }
 }
