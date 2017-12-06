@@ -43,7 +43,7 @@ public class PrimeiraIteracaoUnitTest {
      */
 
     @Test
-    public void loginTeste() throws Exception{
+    public void loginTesteSucesso() throws Exception{
         RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
         Call<MensagemAPI> call1 = service1.cadastrarUsuario("Pablo", "mail@mail.com", "senha");
         Response<MensagemAPI> response = call1.execute();
@@ -55,19 +55,33 @@ public class PrimeiraIteracaoUnitTest {
         Response<Usuario> response2 = call2.execute();
         assertTrue(response2.body().getLogado());
 
+
+    }
+
+    @Test
+    public void loginTesteSenhaErrada() throws Exception{
+        RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
+        Call<MensagemAPI> call1 = service1.cadastrarUsuario("Pablo", "mail@mail.com", "senha");
+        Response<MensagemAPI> response = call1.execute();
+
         //Teste com senha incorreta
         RetrofitService service3 = ServiceGenerator.createService(RetrofitService.class);
         Call<Usuario> call3 = service3.login("mail@mail.com", "pass");
         Response<Usuario> response3 = call3.execute();
         assertFalse(response3.body().getLogado());
 
+    }
+
+    @Test
+    public void loginTesteUsuarioInexistente() throws Exception{
+        RetrofitService service1 = ServiceGenerator.createService(RetrofitService.class);
+        Call<MensagemAPI> call1 = service1.cadastrarUsuario("Pablo", "mail@mail.com", "senha");
+        Response<MensagemAPI> response = call1.execute();
 
         //Teste com email incorreto
         RetrofitService service4 = ServiceGenerator.createService(RetrofitService.class);
         Call<Usuario> call4 = service4.login("new_email@mail.com", "senha");
         Response<Usuario> response4 = call4.execute();
         assertFalse(response4.body().getLogado());
-
-
     }
 }
