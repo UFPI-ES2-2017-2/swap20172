@@ -3,6 +3,7 @@ package ufpi.br.swap;
 import org.junit.Test;
 
 import ufpi.br.swap.controle.CadastroActivity;
+import ufpi.br.swap.controle.LoginActivity;
 
 import static org.junit.Assert.*;
 
@@ -23,6 +24,16 @@ public class PrimeiraIteracaoUnitTest {
 
         boolean status;
         status = ca.cadastrarUsuario("João","email@mail.com","senha");
+
+        assertEquals(true,status);
+    }
+
+    @Test
+    public void loginTeste() throws Exception{
+        LoginActivity la = new LoginActivity();
+        boolean status;
+
+        status = la.efetuarLogin("mail@mail.com", "senha");
 
         assertEquals(true,status);
     }
