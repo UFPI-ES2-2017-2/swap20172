@@ -18,6 +18,9 @@ import ufpi.br.swap.entidades.Usuario;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
 
+/**
+ * Classe responsável pelo gerenciamento da tela de login.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
@@ -28,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonCadastrar;
     private boolean status = true;
 
+    /**
+     * Método responsável pelo gerenciamento dos componentes da tela de login e do
+     * tratamento dos eventos ocorridos, por exemplo, um click em um botão.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +61,16 @@ public class LoginActivity extends AppCompatActivity {
         this.status = value;
     }
 
+    /**
+     * Método responsável pelo gerenciamento e tratamento do evento de click de um botão.
+     */
     private void listenerButtons() {
         buttonEntrar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método responsável pelo tratamento do evento de click do botão Entrar, chamando o
+             * método "efetuarLogin()".
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
@@ -69,6 +85,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         buttonCadastrar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método responsável pelo tratamento do evento de click do botão Cadastrar, chamando o
+             * método "goToCadastro()".
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 goToCadastro(v);
@@ -76,6 +97,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         buttonEsqueceuSenha.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método responsável pelo tratamento do evento de click do botão EsqueceuSenha, chamando o
+             * método "goToEsqueceuSenha()".
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 goToEsqueceuSenha(v);
@@ -83,20 +109,43 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método responsável por redirecionar para a tela esqueceu senha após ser chamado pelo método
+     * onClick() do botão EsqueceuSenha.
+     * @param v
+     */
     private void goToEsqueceuSenha(View v) {
         Intent intent = new Intent(this, EsqueceuSenhaActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Método responsável por redirecionar para a tela de cadastro de usuário após ser chamado pelo
+     * método onClick() do botão Cadastrar.
+     * @param v
+     */
     private void goToCadastro(View v) {
         Intent intent = new Intent(this, CadastroActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Método (chamado pelo método onClick() do botão Entrar) responsável por realizar o login do usuário e redirecionar para tela inicial caso o
+     * login tenha ocorrido com sucesso.
+     * @param email
+     * @param senha
+     * @return this.status
+     */
     public boolean efetuarLogin(String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<Usuario> call = service.login(email, senha);
         call.enqueue(new Callback<Usuario>() {
+            /**
+             * Método responsável por redirecionar para tela inicial caso o login do usuário tenha
+             * sido realizado com sucesso. Caso contrário, exibe uma mensagem de erro na tela.
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
@@ -111,6 +160,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
+            /**
+             * Método responsável por exibir uma mensagem de erro na tela caso ocorra falha na
+             * realização do login.
+             * @param call
+             * @param t
+             */
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
                 setStatus(false);
@@ -121,6 +176,11 @@ public class LoginActivity extends AppCompatActivity {
         return this.status;
     }
 
+    /**
+     * Método responsável por redirecionar para tela inicial após o login ter sido realizado
+     * com sucesso.
+     * @param usuario
+     */
     private void irParaTelaInicial(Usuario usuario) {
         Intent intent = new Intent(this, InicialActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

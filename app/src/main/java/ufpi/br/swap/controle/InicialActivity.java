@@ -32,6 +32,9 @@ import ufpi.br.swap.entidades.Usuario;
 import ufpi.br.swap.servico.RetrofitService;
 import ufpi.br.swap.servico.ServiceGenerator;
 
+/**
+ * Classe responsável pelo gerenciamento da tela inicial.
+ */
 public class InicialActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,6 +52,11 @@ public class InicialActivity extends AppCompatActivity
     private RadioButton radioButtonConhecimentos;
     private RadioButton radioButtonUsuarios;
 
+    /**
+     * Método responsável pelo gerenciamento dos componentes da tela inicial e do
+     * tratamento dos eventos ocorridos, por exemplo, um click em um botão.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +92,10 @@ public class InicialActivity extends AppCompatActivity
         eventoPesquisa();
     }
 
+    /**
+     * Método responsável por preencher os campos com dados do usuário logado na aplicação.
+     * @param nav
+     */
     private void setarTextViews(View nav) {
         userEmailText = (TextView) nav.findViewById(R.id.user_email);
         userNameText = (TextView) nav.findViewById(R.id.user_name);
@@ -97,6 +109,9 @@ public class InicialActivity extends AppCompatActivity
         userNameText.setText(nome);
     }
 
+    /**
+     * Método responsável por tratar o evento de click no botão back do dispositivo.
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -107,6 +122,12 @@ public class InicialActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Método responsável por tratar o evento de click de um MenuItem, alterando o conteúdo da tela
+     * de acordo com o item clicado.
+     * @param item
+     * @return true
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -128,10 +149,20 @@ public class InicialActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Método responsável por buscar os conhecimentos recomendados do usuário logado e atualizar a
+     * lista de conhecimentos recomendados.
+     */
     private void buscarConhecimentosRecomendados() {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<List<Conhecimento>> call = service.getConhecimentosRecomendados();
         call.enqueue(new Callback<List<Conhecimento>>() {
+            /**
+             * Método responsável por atualizar a lista de conhecimentos recomendados caso a busca
+             * tenha sido realizada com sucesso.
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
                 if (response.isSuccessful()) {
@@ -140,6 +171,12 @@ public class InicialActivity extends AppCompatActivity
                 }
             }
 
+            /**
+             * Método responsável por exibir uma mensagem de erro caso a busca não tenha sido
+             * realizada com sucesso.
+             * @param call
+             * @param t
+             */
             @Override
             public void onFailure(Call<List<Conhecimento>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
@@ -147,8 +184,17 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Método responsável por fazer o gerenciamento dos componentes e o tratamento dos eventos
+     * relacionados ao campo de pesquisa.
+     */
     private void eventoPesquisa() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            /**
+             * Método responsável por realizar a pesquisa de conhecimentos e usuários.
+             * @param query
+             * @return false
+             */
             @Override
             public boolean onQueryTextSubmit(String query) {
                 labelConhecimentos.setText("Resultados");
@@ -160,6 +206,12 @@ public class InicialActivity extends AppCompatActivity
                 return false;
             }
 
+            /**
+             * Método responsável por pesquisar novamente caso ocorra mudança no conteudo da
+             * pesquisa.
+             * @param newText
+             * @return false
+             */
             @Override
             public boolean onQueryTextChange(String newText) {
                 labelConhecimentos.setText("Resultados");
@@ -173,6 +225,11 @@ public class InicialActivity extends AppCompatActivity
         });
 
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            /**
+             * Método responsável por mudar a "labelConhecimentos" e buscar os conhecimentos
+             * recomendados após a pesquisa ser encerrada.
+             * @return false
+             */
             @Override
             public boolean onClose() {
                 buscarConhecimentosRecomendados();
@@ -182,10 +239,21 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Método responsável por realizar a pesquisa de conhecimentos e atualizar a lista de
+     * conhecimentos recomendados.
+     * @param query
+     */
     private void pesquisarConhecimentos(String query) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<List<Conhecimento>> call = service.pesquisarConhecimentos(query);
         call.enqueue(new Callback<List<Conhecimento>>() {
+            /**
+             * Método responsável por atualizar a lista de conhecimentos recomendados caso a
+             * pesquisa tenha sido realizada com sucesso.
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
                 if (response.isSuccessful()) {
@@ -194,6 +262,12 @@ public class InicialActivity extends AppCompatActivity
                 }
             }
 
+            /**
+             * Método responsável por exibir uma mensagem de erro caso a pesquisa não tenha sido
+             * realizada com sucesso.
+             * @param call
+             * @param t
+             */
             @Override
             public void onFailure(Call<List<Conhecimento>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
@@ -201,10 +275,20 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Método responsável por realizar a pesquisa de usuário e atualizar a "listaPesquisaUsuarios" .
+     * @param query
+     */
     private void pesquisarUsuarios(String query) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<List<Usuario>> call = service.pesquisarUsuarios(query);
         call.enqueue(new Callback<List<Usuario>>() {
+            /**
+             * Método responsável por atualizar a "listaPesquisaUsuarios" caso a
+             * pesquisa tenha sido realizada com sucesso.
+             * @param call
+             * @param response
+             */
             @Override
             public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
                 if (response.isSuccessful()) {
@@ -213,6 +297,12 @@ public class InicialActivity extends AppCompatActivity
                 }
             }
 
+            /**
+             *  Método responsável por exibir uma mensagem de erro caso a pesquisa não tenha sido
+             * realizada com sucesso.
+             * @param call
+             * @param t
+             */
             @Override
             public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
@@ -220,6 +310,10 @@ public class InicialActivity extends AppCompatActivity
         });
     }
 
+    /**
+     * Método responsável por atualizar a lista que será exibida na tela de acordo com o que foi
+     * retornado pela pesquisa.
+     */
     private void setarLista() {
         if(radioButtonConhecimentos.isChecked()) {
             adapterConhecimentos = new ArrayAdapter<Conhecimento>(this, android.R.layout.simple_list_item_1, listaConhecimentosRecomendados);
@@ -232,6 +326,14 @@ public class InicialActivity extends AppCompatActivity
         }
 
         listaRecomendados.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Método responsável por fazer o tratamento do evento de click em um dos itens da
+             * lista, redirecionando para a tela de vizualização de aula correspondente.
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                 Conhecimento c = listaConhecimentosRecomendados.get(position);
