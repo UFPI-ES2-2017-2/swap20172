@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 import ufpi.br.swap.R;
 
+/**
+ * Classe responsável pelo gerenciamento da tela de visualização de aula
+ */
 public class AulaActivity extends AppCompatActivity {
 
     private String nomeConhecimento;
@@ -25,6 +28,11 @@ public class AulaActivity extends AppCompatActivity {
     private TextView numeroAvaliacao;
     private RatingBar ratingBar;
 
+    /**
+     * Método responsável pelo gerenciamento dos componentes da tela de visualização de aula e do
+     * tratamento dos eventos ocorridos, por exemplo, um click em um botão.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,10 @@ public class AulaActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método responsável pelo tratamento do evento de click.
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Você curtiu a aula. Aguarde " + nomeUsuario + " aceitar sua proposta.", Snackbar.LENGTH_LONG).setAction("Action", null).show();
