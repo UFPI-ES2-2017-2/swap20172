@@ -20,6 +20,12 @@ public interface RetrofitService {
     );
 
     @FormUrlEncoded
+    @POST("user/search")
+    Call<List<Usuario>> pesquisarUsuarios(
+            @Field("name") String name
+    );
+
+    @FormUrlEncoded
     @POST("user/signup")
     Call<MensagemAPI> cadastrarUsuario(
             @Field("name") String name,
