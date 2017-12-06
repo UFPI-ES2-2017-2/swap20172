@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.widget.SearchView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -46,6 +48,8 @@ public class InicialActivity extends AppCompatActivity
     private TextView userEmailText;
     private TextView userNameText;
     private ListView listaRecomendados;
+    private SearchView searchView;
+    private TextView labelConhecimentos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +59,6 @@ public class InicialActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Página Inicial");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -77,6 +73,12 @@ public class InicialActivity extends AppCompatActivity
 
         listaRecomendados = (ListView) findViewById(R.id.lista_recomendados);
         buscarConhecimentosRecomendados();
+
+        labelConhecimentos = (TextView) findViewById(R.id.textView_recomendados);
+
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQueryHint("Pesquisar Conhecimentos");
+        eventoPesquisa();
     }
 
     private void setarTextViews(View nav) {
@@ -156,6 +158,51 @@ public class InicialActivity extends AppCompatActivity
                 intent.putExtra("nome_usuario", c.getUser());
                 intent.putExtra("rating", c.getRating());
                 startActivity(intent);
+            }
+        });
+    }
+
+    private void eventoPesquisa() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                labelConhecimentos.setText("Resultados");
+                pesquisarConhecimentos(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                labelConhecimentos.setText("Resultados");
+                pesquisarConhecimentos(newText);
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener(){
+            @Override
+            public boolean onClose(){
+                labelConhecimentos.setText("Recomendados");
+                return false;
+            }
+        });
+    }
+
+    private void pesquisarConhecimentos(String query) {
+        RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
+        Call<List<Conhecimento>> call = service.pesquisarConhecimentos(query);
+        call.enqueue(new Callback<List<Conhecimento>>() {
+            @Override
+            public void onResponse(Call<List<Conhecimento>> call, Response<List<Conhecimento>> response) {
+                if (response.isSuccessful()) {
+                    listaConhecimentosRecomendados = response.body();
+                    setarLista();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Conhecimento>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
     }
