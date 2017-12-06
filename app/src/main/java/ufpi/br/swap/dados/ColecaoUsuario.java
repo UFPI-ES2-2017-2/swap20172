@@ -2,7 +2,6 @@ package ufpi.br.swap.dados;
 
 import android.content.ContentValues;
 
-import ufpi.br.swap.DataModel.DataModel;
 import ufpi.br.swap.DataSource.DataSource;
 import ufpi.br.swap.entidades.Usuario;
 
@@ -22,9 +21,9 @@ public class ColecaoUsuario implements IColecaoUsuario {
     public boolean buscarUsuario(Usuario objeto) {
         values = new ContentValues();
         values.put("email",objeto.getEmail());
-        values.put("nome",objeto.getNome());
-        values.put("senha",objeto.getSenha());
-        values.put("logado",objeto.getLogado());
+        values.put("nome",objeto.getName());
+        values.put("senha",objeto.getPassword());
+        values.put("logado",objeto.getLogged());
         ds.inserirUsuario(values,"USUARIO");
         return true;
     }
@@ -36,9 +35,9 @@ public class ColecaoUsuario implements IColecaoUsuario {
     public boolean criarUsuario(Usuario objeto) {
         values = new ContentValues();
         values.put("email",objeto.getEmail());
-        values.put("nome",objeto.getNome());
-        values.put("senha",objeto.getSenha());
-        values.put("logado",objeto.getLogado());
+        values.put("nome",objeto.getName());
+        values.put("senha",objeto.getPassword());
+        values.put("logado",objeto.getLogged());
         ds.recuperarUsuario("USUARIO");
         return true;
     }
