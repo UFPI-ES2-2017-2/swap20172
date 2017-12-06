@@ -6,17 +6,22 @@ package ufpi.br.swap.entidades;
  */
 public class Usuario {
 
-    private String nome;
+    private String name;
     private String email;
-    private String senha;
-    private Boolean logado;
+    private String password;
+    private Boolean logged;
 
-    public String getNome() {
-        return nome;
+    @Override
+    public String toString() {
+        return name + "\nEmail: " + email;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -27,19 +32,19 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Boolean getLogado() {
-        return logado;
+    public Boolean getLogged() {
+        return logged;
     }
 
-    public void setLogado(Boolean logado) {
-        this.logado = logado;
+    public void setLogged(Boolean logged) {
+        this.logged = logged;
     }
 }
