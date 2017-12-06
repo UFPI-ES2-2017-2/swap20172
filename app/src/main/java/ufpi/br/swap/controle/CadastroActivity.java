@@ -24,6 +24,7 @@ public class CadastroActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private EditText editTextSenha;
     private EditText editTextSenhaRepetida;
+    private boolean status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,14 @@ public class CadastroActivity extends AppCompatActivity {
         editTextSenhaRepetida = (EditText) findViewById(R.id.editText_senha_cadastro_repetida);
 
         listenerButtons();
+    }
+
+    /**
+     * Seta o valor do atributo status
+     * @param value
+     */
+    private void setStatus(boolean value){
+        this.status = value;
     }
 
     private void listenerButtons() {
@@ -63,7 +72,7 @@ public class CadastroActivity extends AppCompatActivity {
         });
     }
 
-    private void cadastrarUsuario(String nome, String email, String senha) {
+    public boolean cadastrarUsuario(String nome, String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<MensagemAPI> call = service.cadastrarUsuario(nome, email, senha);
         call.enqueue(new Callback<MensagemAPI>() {
@@ -77,8 +86,10 @@ public class CadastroActivity extends AppCompatActivity {
                     if (success) {
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         voltarParaTelaLogin();
+                        setStatus(true);
                     } else {
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        setStatus(false);
                     }
                 }
             }
@@ -86,8 +97,11 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<MensagemAPI> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
+                setStatus(false);
             }
         });
+
+        return this.status;
     }
 
     private void voltarParaTelaLogin() {

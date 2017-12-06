@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonEsqueceuSenha;
     private Button buttonFacebook;
     private Button buttonCadastrar;
+    private boolean status = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         buttonCadastrar = (Button) findViewById(R.id.button_cadastrar);
 
         listenerButtons();
+    }
+
+    /**
+     * Setter para o atributo valor
+     * @param value
+     */
+    public void setStatus(boolean value){
+        this.status = value;
     }
 
     private void listenerButtons() {
@@ -85,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void efetuarLogin(String email, String senha) {
+    public boolean efetuarLogin(String email, String senha) {
         RetrofitService service = ServiceGenerator.createService(RetrofitService.class);
         Call<Usuario> call = service.login(email, senha);
         call.enqueue(new Callback<Usuario>() {
@@ -94,8 +103,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Usuario usuario = response.body();
                     if (usuario.getLogado()) {
+                        setStatus(true);
                         irParaTelaInicial(usuario);
                     } else {
+                        setStatus(false);
                         Toast.makeText(getApplicationContext(), "Usuário inexistente", Toast.LENGTH_LONG).show();
                     }
                 }
@@ -103,9 +114,12 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
+                setStatus(false);
                 Toast.makeText(getApplicationContext(), R.string.erro_conectar_servidor, Toast.LENGTH_LONG).show();
             }
         });
+
+        return this.status;
     }
 
     private void irParaTelaInicial(Usuario usuario) {
