@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class PrimeiraIteracaoUnitTest {
 
     /**
-     * CU testado: cadastrar novo usuário
+     * C.U. testado: cadastrar novo usuário
      * @throws Exception
      */
     @Test
@@ -28,6 +28,10 @@ public class PrimeiraIteracaoUnitTest {
         assertEquals(true,status);
     }
 
+    /**
+     * C.U. testado: efetuar login (controle de sessão)
+     * @throws Exception
+     */
     @Test
     public void loginTeste() throws Exception{
         LoginActivity la = new LoginActivity();
