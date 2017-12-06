@@ -10,18 +10,18 @@ public class Conhecimento{
     private String user;
     private String name;
     private String description;
-    private Float rating;
+    private double rating;
 
     @Override
     public String toString() {
         return name + "\npor " + user;
     }
 
-    public Float getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(Float rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 
